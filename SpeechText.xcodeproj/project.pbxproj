@@ -14,6 +14,7 @@
 		4BAC475721561A1D00A2053C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4BAC475521561A1D00A2053C /* LaunchScreen.storyboard */; };
 		4BAC475F21561C4B00A2053C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAC475E21561C4B00A2053C /* ViewController.swift */; };
 		4BAC476321569A2000A2053C /* TextToSpeech.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAC476221569A2000A2053C /* TextToSpeech.swift */; };
+		4BAFF14B2156C94D008425C2 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAFF14A2156C94D008425C2 /* PageViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		4BAC475E21561C4B00A2053C /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		4BAC476021561C8500A2053C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4BAC476221569A2000A2053C /* TextToSpeech.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextToSpeech.swift; sourceTree = "<group>"; };
+		4BAFF14A2156C94D008425C2 /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,7 @@
 			children = (
 				4BAC474921561A1C00A2053C /* AppDelegate.swift */,
 				4BAC476221569A2000A2053C /* TextToSpeech.swift */,
+				4BAFF14A2156C94D008425C2 /* PageViewController.swift */,
 				4BAC474D21561A1C00A2053C /* Main.storyboard */,
 				4BAC475E21561C4B00A2053C /* ViewController.swift */,
 				4BAC475321561A1D00A2053C /* Assets.xcassets */,
@@ -142,6 +145,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4BAC475F21561C4B00A2053C /* ViewController.swift in Sources */,
+				4BAFF14B2156C94D008425C2 /* PageViewController.swift in Sources */,
 				4BAC476321569A2000A2053C /* TextToSpeech.swift in Sources */,
 				4BAC475221561A1C00A2053C /* SpeechText.xcdatamodeld in Sources */,
 				4BAC474A21561A1C00A2053C /* AppDelegate.swift in Sources */,

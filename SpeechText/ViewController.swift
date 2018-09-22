@@ -61,13 +61,13 @@ class ViewController: UIViewController, SFSpeechRecognizerDelegate {
         
         //gesture recognizer code
         
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
-        swipeRight.direction = UISwipeGestureRecognizerDirection.right
-        
-        self.view.addGestureRecognizer(swipeRight)
-        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
-        swipeLeft.direction = UISwipeGestureRecognizerDirection.left
-        self.view.addGestureRecognizer(swipeLeft)
+//        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
+//        swipeRight.direction = UISwipeGestureRecognizerDirection.right
+//        
+//        self.view.addGestureRecognizer(swipeRight)
+//        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
+//        swipeLeft.direction = UISwipeGestureRecognizerDirection.left
+//        self.view.addGestureRecognizer(swipeLeft)
 	}
 
 	@IBAction func microphoneTapped(_ sender: AnyObject) {
@@ -152,27 +152,27 @@ class ViewController: UIViewController, SFSpeechRecognizerDelegate {
     
     //deal with swiping
     
-   @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
-        if let swipeGesture = gesture as? UISwipeGestureRecognizer {
-            switch swipeGesture.direction {
-            case UISwipeGestureRecognizerDirection.right:
-                print("swipe right")
-                //right view controller
-                let newViewController = ViewController()
-                self.navigationController?.pushViewController(newViewController, animated: true)
-            case UISwipeGestureRecognizerDirection.left:
-                print("swipe left")
-                //left view controller
-                //let newViewController = TextToSpeech()
-                let newViewController = self.storyboard?.instantiateViewController(withIdentifier: "TextToSpeech") as! TextToSpeech
-                self.navigationController?.pushViewController(newViewController, animated: true)
-                
-                
-            default:
-                break
-            }
-        }
-    }
+//   @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
+//        if let swipeGesture = gesture as? UISwipeGestureRecognizer {
+//            switch swipeGesture.direction {
+//            case UISwipeGestureRecognizerDirection.right:
+//                print("swipe right")
+//                //right view controller
+//                let newViewController = ViewController()
+//                self.navigationController?.pushViewController(newViewController, animated: true)
+//            case UISwipeGestureRecognizerDirection.left:
+//                print("swipe left")
+//                //left view controller
+//                //let newViewController = TextToSpeech()
+//                let newViewController = self.storyboard?.instantiateViewController(withIdentifier: "TextToSpeech") as! TextToSpeech
+//                self.navigationController?.pushViewController(newViewController, animated: true)
+//
+//
+//            default:
+//                break
+//            }
+//        }
+//    }
     
     func speechRecognizer(_ speechRecognizer: SFSpeechRecognizer, availabilityDidChange available: Bool) {
         if available {
