@@ -62,13 +62,34 @@
                     <view key="view" contentMode="scaleToFill" id="AZw-gZ-6aa">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="HQc-hu-KLg">
+                                <rect key="frame" x="67" y="84" width="240" height="305"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F8z-Pp-vzc">
+                                <rect key="frame" x="302" y="46" width="43" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Speak"/>
+                                <connections>
+                                    <action selector="speakButtonTapped:" destination="lGW-eB-K7W" eventType="touchUpInside" id="adf-3L-CyM"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="FpS-HQ-0Lp"/>
                     </view>
+                    <connections>
+                        <outlet property="speakButton" destination="F8z-Pp-vzc" id="q2V-we-YZj"/>
+                        <outlet property="textView" destination="HQc-hu-KLg" id="4nq-MM-1hX"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qgB-di-cPT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="630" y="132"/>
+            <point key="canvasLocation" x="629.60000000000002" y="131.78410794602701"/>
         </scene>
     </scenes>
 </document>
