@@ -9,11 +9,23 @@
 import UIKit
 import Speech
 
-class ViewController: UIViewController, SFSpeechRecognizerDelegate {
+class ViewController: UIViewController, SFSpeechRecognizerDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
 	
 	
-    @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var microphoneButton: UIButton!
+    @IBOutlet weak var sendButton: UIButton!
+    @IBOutlet weak var speakField: UITextField!
+    @IBOutlet weak var tableView: UITableView!
+    
+    var messages = [Message]() {
+        didSet {
+            tableView.reloadData()
+        }
+    }//didSet?
+    
+    var message : Message!
+    
+    
 	
     private let speechRecognizer = SFSpeechRecognizer(locale: Locale.init(identifier: "en-US"))!
     
@@ -23,15 +35,22 @@ class ViewController: UIViewController, SFSpeechRecognizerDelegate {
     
 	override func viewDidLoad() {
         super.viewDidLoad()
+        self.messages.append(Message(message: "hey", sender: "test")) // okee so new messages don't dequeue at all...
+        self.tableView.register(MessagesCell.self, forCellReuseIdentifier: "Message")
         
+        tableView.delegate = self
         
+        tableView.dataSource = self
+        tableView.rowHeight = UITableViewAutomaticDimension
         
-        
-        
+        tableView.estimatedRowHeight = 300
+        //make sure you load data
+        tableView.reloadData()
         
         microphoneButton.isEnabled = false
         
         speechRecognizer.delegate = self
+        
         
         SFSpeechRecognizer.requestAuthorization { (authStatus) in
             
@@ -77,12 +96,15 @@ class ViewController: UIViewController, SFSpeechRecognizerDelegate {
             microphoneButton.isEnabled = false
             microphoneButton.setTitle("Start Recording", for: .normal)
         } else {
-            startRecording()
+            let message = Message(message: "message", sender: "sender") //need to have message be the current text
+            
+            self.messages.append(message)
+            startRecording(message: message )
             microphoneButton.setTitle("Stop Recording", for: .normal)
         }
 	}
 
-    func startRecording() {
+    func startRecording(message: Message) {
         
         if recognitionTask != nil {  //1
             recognitionTask?.cancel()
@@ -118,7 +140,22 @@ class ViewController: UIViewController, SFSpeechRecognizerDelegate {
             
             if result != nil {
                 
-                self.textView.text = result?.bestTranscription.formattedString  //9
+                //self.textView.text = result?.bestTranscription.formattedString  //9
+                
+                //this should only execute once...
+                //self.tableView.insertRows(at: [IndexPath(row: self.messages.count-1, section: 0)], with: .automatic)
+                //self.tableView.reloadData()
+                //self.tableView.cellForRow(at: IndexPath(row: self.messages.count-1, section: 0))?.textLabel?.text = result?.bestTranscription.formattedString
+                //self.tableView.reloadData()
+                
+                //this sort of works
+//                self.messages.append(Message(message: (result?.bestTranscription.formattedString)!, sender: ""))
+//                self.tableView.reloadData()
+                
+                self.tableView.cellForRow(at: IndexPath(row: self.messages.count-1, section: 0))?.textLabel?.text = result?.bestTranscription.formattedString
+                self.tableView.reloadData() //IT WORKS
+               
+                message._message = result?.bestTranscription.formattedString
                 isFinal = (result?.isFinal)!
             }
             
@@ -146,9 +183,35 @@ class ViewController: UIViewController, SFSpeechRecognizerDelegate {
             print("audioEngine couldn't start because of an error.")
         }
         
-        textView.text = "Say something, I'm listening!"
+       // textView.text = "Say something, I'm listening!"
         
     }
+    
+//    func numberOfSections(in tableView: UITableView) -> Int {
+//        return 1
+//    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return messages.count //probably bc no messages in message array?
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        //let message = messages[indexPath.row]
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Message", for: indexPath) as! MessagesCell
+        cell.contentView.backgroundColor = UIColor.gray
+            return cell
+    }
+        
+        
+            //cell receiverLabel.text =
+            
+//            return cell
+//
+//        } else {
+//            return MessagesCell()
+//        }
+//    }
     
     //deal with swiping
     
