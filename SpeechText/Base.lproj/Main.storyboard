@@ -1,24 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Xsp-qO-seg">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Page View Controller-->
-        <scene sceneID="Sff-td-fQP">
-            <objects>
-                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="Xsp-qO-seg" customClass="PageViewController" customModule="SpeechText" customModuleProvider="target" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="zdc-dD-hIx" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="204" y="-591"/>
-        </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -49,6 +40,9 @@
                                             <constraint firstAttribute="width" constant="46" id="I7O-7h-Tw3"/>
                                         </constraints>
                                         <state key="normal" title="Speak"/>
+                                        <connections>
+                                            <action selector="speakButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="E4z-TT-XbG"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="piQ-t8-jvf">
                                         <rect key="frame" x="318" y="5" width="52" height="35"/>
@@ -86,10 +80,10 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hc5-s8-9M1">
-                                                    <rect key="frame" x="23" y="11" width="16" height="69"/>
+                                                    <rect key="frame" x="23" y="11" width="178" height="69"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bWO-QK-kaN">
-                                                            <rect key="frame" x="8" y="8" width="0.0" height="53"/>
+                                                            <rect key="frame" x="8" y="8" width="162" height="53"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -165,7 +159,7 @@
                     <navigationItem key="navigationItem" id="bxl-oH-Oev"/>
                     <connections>
                         <outlet property="microphoneButton" destination="piQ-t8-jvf" id="53q-BG-J0L"/>
-                        <outlet property="sendButton" destination="LQt-0w-qQG" id="lVa-xN-QBh"/>
+                        <outlet property="speakButton" destination="LQt-0w-qQG" id="IRN-78-C0C"/>
                         <outlet property="speakField" destination="If3-12-uNq" id="ijE-pN-1hd"/>
                         <outlet property="tableView" destination="ZWg-gG-cvI" id="a2R-Xn-Zm5"/>
                     </connections>
@@ -193,16 +187,12 @@
                                 <rect key="frame" x="302" y="46" width="43" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Speak"/>
-                                <connections>
-                                    <action selector="speakButtonTapped:" destination="lGW-eB-K7W" eventType="touchUpInside" id="adf-3L-CyM"/>
-                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="FpS-HQ-0Lp"/>
                     </view>
                     <connections>
-                        <outlet property="speakButton" destination="F8z-Pp-vzc" id="q2V-we-YZj"/>
                         <outlet property="textView" destination="HQc-hu-KLg" id="4nq-MM-1hX"/>
                     </connections>
                 </viewController>

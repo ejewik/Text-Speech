@@ -9,21 +9,88 @@
 import UIKit
 import Speech
 
+var messages : [Message] = []
+
 class ViewController: UIViewController, SFSpeechRecognizerDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
 	
 	
     @IBOutlet weak var microphoneButton: UIButton!
-    @IBOutlet weak var sendButton: UIButton!
+    @IBOutlet weak var speakButton: UIButton!
     @IBOutlet weak var speakField: UITextField!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet var keyboardHeightLayoutConstraint: NSLayoutConstraint?
+    
+//
+//    @IBOutlet var keyboardHeightLayoutConstraint: NSLayoutConstraint?
+//
+//    override func viewDidLoad() {
+//        super.viewDidLoad()
+//        // Note that SO highlighting makes the new selector syntax (#selector()) look
+//        // like a comment but it isn't one
+//        NotificationCenter.default.addObserver(self,
+//                                               selector: #selector(self.keyboardNotification(notification:)),
+//                                               name: NSNotification.Name.UIKeyboardWillChangeFrame,
+//                                               object: nil)
+//    }
+//
+//    deinit {
+//        NotificationCenter.default.removeObserver(self)
+//    }
+//
+//    @objc func keyboardNotification(notification: NSNotification) {
+//        if let userInfo = notification.userInfo {
+//            let endFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
+//            let endFrameY = endFrame.origin.y ?? 0
+//            let duration:TimeInterval = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue ?? 0
+//            let animationCurveRawNSN = userInfo[UIKeyboardAnimationCurveUserInfoKey] as? NSNumber
+//            let animationCurveRaw = animationCurveRawNSN?.uintValue ?? UIViewAnimationOptions.curveEaseInOut.rawValue
+//            let animationCurve:UIViewAnimationOptions = UIViewAnimationOptions(rawValue: animationCurveRaw)
+//            if endFrameY >= UIScreen.main.bounds.size.height {
+//                self.keyboardHeightLayoutConstraint?.constant = 0.0
+//            } else {
+//                self.keyboardHeightLayoutConstraint?.constant = endFrame?.size.height ?? 0.0
+//            }
+//            UIView.animate(withDuration: duration,
+//                           delay: TimeInterval(0),
+//                           options: animationCurve,
+//                           animations: { self.view.layoutIfNeeded() },
+//                           completion: nil)
+//        }
+//    }
+//
+    
+    
+    
+    
     
     var messages = [Message]() {
         didSet {
+            
             tableView.reloadData()
         }
     }//didSet?
     
     var message : Message!
+    
+    var utterance : AVSpeechUtterance?
+    
+    
+    let synth = AVSpeechSynthesizer()
+    
+   
+    
+    
+    @IBAction func speakButtonTapped(_ sender: UIButton) {
+        if speakButton.isEnabled == true {
+        utterance = AVSpeechUtterance(string: speakField.text!)
+        synth.speak(utterance!)
+        messages.append(Message(message: speakField.text!, sender: "sender"))
+        
+        self.tableView.cellForRow(at: IndexPath(row: self.messages.count-1, section: 0))?.textLabel?.text = speakField.text
+        self.tableView.reloadData() //IT WORKS
+        }
+    }
+    
     
     
 	
@@ -35,6 +102,23 @@ class ViewController: UIViewController, SFSpeechRecognizerDelegate, UITableViewD
     
 	override func viewDidLoad() {
         super.viewDidLoad()
+        
+        NotificationCenter.default.addObserver(self,
+                                                        selector: #selector(self.keyboardNotification(notification:)),
+                                                          name: NSNotification.Name.UIKeyboardWillChangeFrame,
+                                                         object: nil)
+        
+        keyboardHeightLayoutConstraint?.constant = 5.0
+        
+        
+        speakField.text = ""
+        
+        utterance?.voice = AVSpeechSynthesisVoice(language: "en-US")
+        
+        speakField.delegate = self
+        
+        
+        
         self.messages.append(Message(message: "hey", sender: "test")) // okee so new messages don't dequeue at all...
         self.tableView.register(MessagesCell.self, forCellReuseIdentifier: "Message")
         
@@ -88,14 +172,24 @@ class ViewController: UIViewController, SFSpeechRecognizerDelegate, UITableViewD
 //        swipeLeft.direction = UISwipeGestureRecognizerDirection.left
 //        self.view.addGestureRecognizer(swipeLeft)
 	}
-
+//disable speak button if recording
+    
+    
+    
+    
+    
+    
+    
+    
 	@IBAction func microphoneTapped(_ sender: AnyObject) {
         if audioEngine.isRunning {
             audioEngine.stop()
             recognitionRequest?.endAudio()
             microphoneButton.isEnabled = false
+            speakButton.isEnabled = false
             microphoneButton.setTitle("Start Recording", for: .normal)
         } else {
+            speakButton.isEnabled = false
             let message = Message(message: "message", sender: "sender") //need to have message be the current text
             
             self.messages.append(message)
@@ -167,6 +261,7 @@ class ViewController: UIViewController, SFSpeechRecognizerDelegate, UITableViewD
                 self.recognitionTask = nil
                 
                 self.microphoneButton.isEnabled = true
+                self.speakButton.isEnabled = true
             }
         })
         
@@ -237,9 +332,36 @@ class ViewController: UIViewController, SFSpeechRecognizerDelegate, UITableViewD
 //        }
 //    }
     
+    
+        deinit {
+            NotificationCenter.default.removeObserver(self)
+        }
+    
+        @objc func keyboardNotification(notification: NSNotification) {
+            if let userInfo = notification.userInfo {
+                let endFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
+                let endFrameY = endFrame?.origin.y ?? 0
+                let duration:TimeInterval = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue ?? 0
+                let animationCurveRawNSN = userInfo[UIKeyboardAnimationCurveUserInfoKey] as? NSNumber
+                let animationCurveRaw = animationCurveRawNSN?.uintValue ?? UIViewAnimationOptions.curveEaseInOut.rawValue
+                let animationCurve:UIViewAnimationOptions = UIViewAnimationOptions(rawValue: animationCurveRaw)
+                if endFrameY >= UIScreen.main.bounds.size.height {
+                    self.keyboardHeightLayoutConstraint?.constant = 0.0
+                } else {
+                    self.keyboardHeightLayoutConstraint?.constant = endFrame?.size.height ?? 0.0
+                }
+                UIView.animate(withDuration: duration,
+                               delay: TimeInterval(0),
+                               options: animationCurve,
+                               animations: { self.view.layoutIfNeeded() },
+                               completion: nil)
+            }
+    }
+    
     func speechRecognizer(_ speechRecognizer: SFSpeechRecognizer, availabilityDidChange available: Bool) {
         if available {
             microphoneButton.isEnabled = true
+            
         } else {
             microphoneButton.isEnabled = false
         }
